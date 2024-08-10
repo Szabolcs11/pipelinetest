@@ -25,7 +25,7 @@ app.post("/users/add", (req, res) => {
     });
   }
   return res.status(201).json({
-    success: true,
+    success: false,
     message: "User added successfully",
     user: { name, age },
   });
