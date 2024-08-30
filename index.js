@@ -3,6 +3,9 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 80;
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
@@ -23,14 +26,18 @@ app.post("/users/add", (req, res) => {
       message: "Please provide name and age",
     });
   }
-  return res.status(201).json({
+  return res.status(200).json({
     success: true,
     message: "User added successfully",
+    user: { name, age },
   });
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening at port ${port}`);
-});
+// Start server only if it's not being required elsewhere (e.g., in tests)
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`Example app listening at port ${port}`);
+  });
+}
 
 module.exports = app;
